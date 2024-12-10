@@ -1,3 +1,5 @@
+exams/v3/*
+
 # Ignore hidden files in all directories
 **/.*
 
