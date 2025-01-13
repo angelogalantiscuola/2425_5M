@@ -1,0 +1,59 @@
+erDiagram
+    BOOK }|--|| CATEGORY : "belongs to"
+    BOOK }o--o{ AUTHOR : "written by"
+    BOOK ||--o{ LOAN : "involved in"
+    MEMBER ||--o{ LOAN : "makes"
+    STAFF ||--o{ LOAN : "manages"
+    PUBLISHER ||--o{ BOOK : "publishes"
+
+    BOOK {
+        int bookID PK
+        string title
+        string ISBN
+        date publishDate
+        int copies
+    }
+
+    AUTHOR {
+        int authorID PK
+        string name
+        string nationality
+        date birthDate
+    }
+
+    MEMBER {
+        int memberID PK
+        string name
+        string email
+        string address
+        date joinDate
+    }
+
+    LOAN {
+        int loanID PK
+        date borrowDate
+        date dueDate
+        date returnDate
+        string status
+    }
+
+    CATEGORY {
+        int categoryID PK
+        string name
+        string description
+    }
+
+    PUBLISHER {
+        int publisherID PK
+        string name
+        string address
+        string contact
+    }
+
+    STAFF {
+        int staffID PK
+        string name
+        string position
+        date hireDate
+        string contact
+    }
