@@ -1,17 +1,24 @@
 erDiagram
     BOOK }|--|| CATEGORY : "belongs to"
-    BOOK }o--o{ AUTHOR : "written by"
     BOOK ||--o{ LOAN : "involved in"
     MEMBER ||--o{ LOAN : "makes"
     STAFF ||--o{ LOAN : "manages"
     PUBLISHER ||--o{ BOOK : "publishes"
+    BOOK ||--o{ BOOKAUTHOR : "written by"
+    BOOKAUTHOR }o--|| AUTHOR : "written by"
 
     BOOK {
-        int bookID PK
+        string ISBN PK
         string title
-        string ISBN
         date publishDate
         int copies
+        int publisherID FK
+        int categoryID FK
+    }
+
+    BOOKAUTHOR {
+        int bookID PK, FK
+        int authorID PK, FK
     }
 
     AUTHOR {
@@ -35,6 +42,9 @@ erDiagram
         date dueDate
         date returnDate
         string status
+        int staffID FK
+        int memberID FK
+        int bookID FK
     }
 
     CATEGORY {
