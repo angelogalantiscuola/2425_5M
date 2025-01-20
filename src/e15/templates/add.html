@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Entries</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Create New Entry</h2>
+        <form method="POST" action="{{ url_for('add_entries') }}">
+            <p>
+                <label for="numero">Numero:</label>
+                <input type="text" id="numero" name="numero">
+            </p>
+            <p>
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" name="tipo">
+            </p>
+            <p>
+                <label for="disponibile">Disponibile:</label>
+                <input type="checkbox" id="disponibile" name="disponibile">
+            </p>
+            <p>
+                <label for="prezzo">Prezzo:</label>
+                <input type="number" id="prezzo" name="prezzo">
+            </p>
+            <p>
+                <label for="numero_posti">Numero Posti:</label>
+                <input type="number" id="numero_posti" name="numero_posti">
+            </p>
+            <p>
+                <input type="submit" value="Submit">
+            </p>
+        </form>
+    </div>
+</body>
+</html>

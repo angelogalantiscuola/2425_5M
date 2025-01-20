@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Entries</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>numero</th>
+                    <th>numero_posti</th>
+                    <th>prezzo</th>
+                    <th>tipo</th>
+                    <th>disponibile</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.numero }}</td>
+                        <td>{{ entry.numero_posti }}</td>
+                        <td>{{ entry.prezzo }}</td>
+                        <td>{{ entry.tipo }}</td>
+                        <td>{% if entry.disponibile == 1 %}Disponibile{% else %}Ocuppata{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <ul>
+            <li>
+                <strong>numero</strong>
+                numero_posti
+                prezzo
+                tipo
+                disponibile
+            </li>
+        {% for entry in entries %}
+            <li>
+                <strong>{{ entry.numero }}</strong>
+                {{ entry.numero_posti }}
+                {{ entry.prezzo }}
+                {{ entry.tipo }}
+                {% if entry.disponibile == 1 %}
+                    Disponibile
+                {% else %}
+                    Ocuppata
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+          -->
+</body>
+</html>

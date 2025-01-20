@@ -1,0 +1,24 @@
+erDiagram
+    %% CAMERA }|--|{ PRENOTAZIONE : "fa parte di"
+    CAMERA ||--|{ CAMERAPRENOTAZIONE : "ha"
+    PRENOTAZIONE ||--|{ CAMERAPRENOTAZIONE : "ha"
+
+    CAMERA {
+        int numero PK
+        string tipo
+        bool disponibile
+        int prezzo
+        int numero_posti
+    }
+
+    PRENOTAZIONE {
+        int id PK
+        date data_arrivo
+        date data_partenza
+        str nome_cliente
+    }
+
+    CAMERAPRENOTAZIONE {
+        int id_camera PK, FK
+        int id_prenotazione PK, FK
+    }
