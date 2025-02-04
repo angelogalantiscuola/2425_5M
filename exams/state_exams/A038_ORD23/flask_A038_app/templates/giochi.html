@@ -8,9 +8,6 @@
         {% for gioco in giochi %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                {% if gioco.immagine1 %}
-                <img src="{{ gioco.immagine1 }}" class="card-img-top" alt="{{ gioco.titolo }}">
-                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ gioco.titolo }}</h5>
                     <p class="card-text">{{ gioco.descrizione_breve }}</p>

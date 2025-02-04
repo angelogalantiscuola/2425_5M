@@ -1,9 +1,10 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, jsonify
 import sqlite3
 import os
-from .queries.queries import GET_ALL_GAMES, GET_GAME_DETAILS, GET_GAME_LEADERBOARD
+from queries.queries import GET_ALL_GAMES, GET_GAME_DETAILS, GET_GAME_LEADERBOARD
 
 app = Flask(__name__)
+app.jinja_env.globals.update(enumerate=enumerate)
 
 # Configurazione del database
 DATABASE = "educational_games.db"
@@ -42,7 +43,9 @@ def init_db():
 @app.route("/")
 def index():
     """Pagina principale"""
-    return render_template("giochi.html")
+    db = get_db()
+    giochi = db.execute(GET_ALL_GAMES).fetchall()
+    return render_template("giochi.html", giochi=giochi)
 
 
 @app.route("/giochi")
@@ -53,6 +56,14 @@ def lista_giochi():
     return render_template("giochi.html", giochi=giochi)
 
 
+@app.route("/giochi/raw")
+def lista_giochi_raw():
+    """Lista di tutti i giochi disponibili in formato JSON"""
+    db = get_db()
+    giochi = db.execute(GET_ALL_GAMES).fetchall()
+    return jsonify([dict(gioco) for gioco in giochi])
+
+
 @app.route("/gioco/<int:id>")
 def dettaglio_gioco(id):
     """Dettagli di un gioco specifico"""
@@ -60,6 +71,20 @@ def dettaglio_gioco(id):
     gioco = db.execute(GET_GAME_DETAILS, [id]).fetchone()
     classifica = db.execute(GET_GAME_LEADERBOARD, [id]).fetchall()
     return render_template("gioco.html", gioco=gioco, classifica=classifica)
+
+
+@app.route("/gioco/<int:id>/raw")
+def dettaglio_gioco_raw(id):
+    """Dettagli di un gioco specifico in formato JSON"""
+    db = get_db()
+    gioco = db.execute(GET_GAME_DETAILS, [id]).fetchone()
+    classifica = db.execute(GET_GAME_LEADERBOARD, [id]).fetchall()
+    return jsonify(
+        {
+            "gioco": dict(gioco) if gioco else None,
+            "classifica": [dict(score) for score in classifica],
+        }
+    )
 
 
 # Registra la funzione di chiusura del database
