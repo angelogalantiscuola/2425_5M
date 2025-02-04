@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-4">{{ gioco.titolo }}</h1>
+            
+            {% if gioco.immagine1 %}
+            <div class="mb-4">
+                <img src="{{ gioco.immagine1 }}" class="img-fluid rounded" alt="{{ gioco.titolo }}">
+            </div>
+            {% endif %}
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Descrizione Breve</h5>
+                    <p class="card-text">{{ gioco.descrizione_breve }}</p>
+                    
+                    <h5 class="card-title mt-4">Descrizione Dettagliata</h5>
+                    <p class="card-text">{{ gioco.descrizione_estesa }}</p>
+                    
+                    <div class="mt-4">
+                        <p class="mb-2"><strong>Monete Totali:</strong> {{ gioco.monete_totali }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Classifica Studenti</h5>
+                </div>
+                <div class="card-body">
+                    {% if classifica %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Studente</th>
+                                    <th>Monete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pos, studente in enumerate(classifica, 1) %}
+                                <tr>
+                                    <td>{{ pos }}</td>
+                                    <td>{{ studente.nome }} {{ studente.cognome }}</td>
+                                    <td>{{ studente.monete_raccolte }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">Nessun risultato disponibile</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

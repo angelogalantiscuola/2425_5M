@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Catalogo Giochi Educativi</h1>
+    
+    <div class="row">
+        {% for gioco in giochi %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if gioco.immagine1 %}
+                <img src="{{ gioco.immagine1 }}" class="card-img-top" alt="{{ gioco.titolo }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ gioco.titolo }}</h5>
+                    <p class="card-text">{{ gioco.descrizione_breve }}</p>
+                    <div class="mt-auto">
+                        <p class="text-muted">Monete totali: {{ gioco.monete_totali }}</p>
+                        <a href="{{ url_for('dettaglio_gioco', id=gioco.id) }}" class="btn btn-primary">
+                            Vedi Dettagli
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
