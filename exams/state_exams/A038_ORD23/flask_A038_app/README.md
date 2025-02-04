@@ -44,13 +44,26 @@ soluzione_A038_app/
 ├── app.py              # Applicazione Flask principale
 ├── requirements.txt    # Dipendenze del progetto
 ├── README.md          # Questo file
-├── schema.sql         # Schema del database
+├── queries/           # Query SQL e utility
+│   ├── queries.py     # QueryLoader e definizioni query
+│   ├── schema.sql     # Schema del database
+│   ├── data.sql       # Dati di esempio
+│   └── queries.sql    # Query SQL principali
 ├── static/            # File statici (CSS, immagini)
 └── templates/         # Template HTML
     ├── base.html      # Template base
     ├── giochi.html    # Lista dei giochi
     └── gioco.html     # Dettaglio del gioco
 ```
+
+## Sistema di Query
+
+L'applicazione utilizza un sistema di query SQL modulare:
+
+- Le query sono definite in file .sql separati nella cartella `queries/`
+- Ogni query è identificata da un commento SQL che ne definisce il nome
+- Il `QueryLoader` carica dinamicamente le query dai file .sql
+- Le query possono essere richiamate per nome usando `QUERIES.get("nome_query")`
 
 ## Funzionalità Implementate
 

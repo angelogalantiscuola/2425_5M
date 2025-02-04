@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, jsonify
 import sqlite3
 import os
-from queries.queries import GET_ALL_GAMES, GET_GAME_DETAILS, GET_GAME_LEADERBOARD
+from queries.queries import QUERIES
 
 app = Flask(__name__)
 app.jinja_env.globals.update(enumerate=enumerate)
@@ -44,7 +44,7 @@ def init_db():
 def index():
     """Pagina principale"""
     db = get_db()
-    giochi = db.execute(GET_ALL_GAMES).fetchall()
+    giochi = db.execute(QUERIES.get("Get all games")).fetchall()
     return render_template("giochi.html", giochi=giochi)
 
 
@@ -52,7 +52,7 @@ def index():
 def lista_giochi():
     """Lista di tutti i giochi disponibili"""
     db = get_db()
-    giochi = db.execute(GET_ALL_GAMES).fetchall()
+    giochi = db.execute(QUERIES.get("Get all games")).fetchall()
     return render_template("giochi.html", giochi=giochi)
 
 
@@ -60,7 +60,7 @@ def lista_giochi():
 def lista_giochi_raw():
     """Lista di tutti i giochi disponibili in formato JSON"""
     db = get_db()
-    giochi = db.execute(GET_ALL_GAMES).fetchall()
+    giochi = db.execute(QUERIES.get("Get all games")).fetchall()
     return jsonify([dict(gioco) for gioco in giochi])
 
 
@@ -68,8 +68,8 @@ def lista_giochi_raw():
 def dettaglio_gioco(id):
     """Dettagli di un gioco specifico"""
     db = get_db()
-    gioco = db.execute(GET_GAME_DETAILS, [id]).fetchone()
-    classifica = db.execute(GET_GAME_LEADERBOARD, [id]).fetchall()
+    gioco = db.execute(QUERIES.get("Get game details"), [id]).fetchone()
+    classifica = db.execute(QUERIES.get("Get game leaderboard"), [id]).fetchall()
     return render_template("gioco.html", gioco=gioco, classifica=classifica)
 
 
@@ -77,8 +77,8 @@ def dettaglio_gioco(id):
 def dettaglio_gioco_raw(id):
     """Dettagli di un gioco specifico in formato JSON"""
     db = get_db()
-    gioco = db.execute(GET_GAME_DETAILS, [id]).fetchone()
-    classifica = db.execute(GET_GAME_LEADERBOARD, [id]).fetchall()
+    gioco = db.execute(QUERIES.get("Get game details"), [id]).fetchone()
+    classifica = db.execute(QUERIES.get("Get game leaderboard"), [id]).fetchall()
     return jsonify(
         {
             "gioco": dict(gioco) if gioco else None,
