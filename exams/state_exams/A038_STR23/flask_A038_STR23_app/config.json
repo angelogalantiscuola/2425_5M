@@ -1,0 +1,4 @@
+{
+    "INITIALIZATION": "honey_database.sql",
+    "DATABASE": "honey_database.db"
+}

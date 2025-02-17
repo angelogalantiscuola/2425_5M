@@ -1,0 +1,50 @@
+<!-- templates/apiari.html -->
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <h1 class="mb-4">Apiari Italiani</h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Codice</th>
+          <th>Località</th>
+          <th>Comune</th>
+          <th>Provincia</th>
+          <th>Regione</th>
+          <th>N° Arnie</th>
+          <th>Apicoltore</th>
+          <th>Miele</th>
+          <th>Tipologia</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for apiario in apiari %}
+        <tr>
+          <td>{{ apiario.codice }}</td>
+          <td>{{ apiario.localita }}</td>
+          <td>{{ apiario.comune }}</td>
+          <td>{{ apiario.provincia }}</td>
+          <td>{{ apiario.regione }}</td>
+          <td>{{ apiario.numero_arnie }}</td>
+          <td>
+            {{ apiario.apicoltore_nome }} {{ apiario.apicoltore_cognome }}
+          </td>
+          <td>{{ apiario.miele_denominazione }}</td>
+          <td><span class="badge badge-info">{{ apiario.tipologia }}</span></td>
+          <td>
+            <a
+              href="{{ url_for('dettaglio_apiario', codice=apiario.codice) }}"
+              class="btn btn-sm btn-primary"
+            >
+              Dettagli
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

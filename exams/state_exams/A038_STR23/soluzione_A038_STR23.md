@@ -329,7 +329,7 @@ if __name__ == "__main__":
 ```
 
 ```html
-<!-- templates/base.html -->
+<!-- templates/apiari.html -->
 {% extends "base.html" %} {% block content %}
 <div class="container">
   <h1 class="mb-4">Apiari Italiani</h1>
