@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squadre di Calcio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Squadre di Calcio</h1>
+        
+        <!-- Table View -->
+        <div class="table-responsive mb-4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Sede</th>
+                        <th>ID Allenatore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for squadra in entries %}
+                    <tr>
+                        <td>{{ squadra['id'] }}</td>
+                        <td>{{ squadra['nome'] }}</td>
+                        <td>{{ squadra['sede'] }}</td>
+                        <td>{{ squadra['allenatore_id'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Card View -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for squadra in entries %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ squadra['nome'] }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ squadra['sede'] }}</h6>
+                        <p class="card-text">
+                            ID Squadra: {{ squadra['id'] }}<br>
+                            ID Allenatore: {{ squadra['allenatore_id'] }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
