@@ -37,26 +37,28 @@ def close_db(error):
     if hasattr(g, "db"):
         g.db.close()
 
-
-@app.route("/raw_squadre")
-def raw_squadre():
+@app.route("/raw_giocatori")
+def raw_giocatori():
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM SQUADRA")
-    entries: list[sqlite3.Row] = cursor.fetchall()
+    cursor.execute("SELECT * FROM GIOCATORE")
+    entries = cursor.fetchall()
     cursor.close()
     return jsonify([dict(row) for row in entries])
 
-
-@app.route("/squadre")
-def squadre():
+@app.route("/")  # Add default route
+@app.route("/giocatori")
+def giocatori():
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM SQUADRA")
+    cursor.execute("""
+        SELECT g.*, a.nome as allenatore_nome, a.cognome as allenatore_cognome 
+        FROM GIOCATORE g 
+        LEFT JOIN ALLENATORE a ON g.allenatore_id = a.id
+    """)
     entries = cursor.fetchall()
     cursor.close()
-    return render_template("squadre.html", entries=entries)
-
+    return render_template("giocatori.html", entries=entries)
 
 if __name__ == "__main__":
     # check if the file database exists

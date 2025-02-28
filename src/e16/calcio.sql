@@ -5,10 +5,11 @@ CREATE TABLE ALLENATORE (
     cognome VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE SQUADRA (
+CREATE TABLE GIOCATORE (
     id INTEGER PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    sede VARCHAR(100) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    cognome VARCHAR(50) NOT NULL,
+    ruolo VARCHAR(20) NOT NULL,
     allenatore_id INTEGER,
     FOREIGN KEY (allenatore_id) REFERENCES ALLENATORE(id)
 );
@@ -18,13 +19,13 @@ CREATE TABLE PARTITA (
     data DATE NOT NULL
 );
 
-CREATE TABLE SQUADRA_PARTITA (
+CREATE TABLE GIOCATORE_PARTITA (
     partita_id INTEGER,
-    squadra_id INTEGER,
-    goal_squadra INTEGER NOT NULL,
-    PRIMARY KEY (partita_id, squadra_id),
+    giocatore_id INTEGER,
+    ha_segnato BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (partita_id, giocatore_id),
     FOREIGN KEY (partita_id) REFERENCES PARTITA(id),
-    FOREIGN KEY (squadra_id) REFERENCES SQUADRA(id)
+    FOREIGN KEY (giocatore_id) REFERENCES GIOCATORE(id)
 );
 
 -- Insert sample data
@@ -33,20 +34,25 @@ INSERT INTO ALLENATORE (id, nome, cognome) VALUES
 (2, 'Carlo', 'Ancelotti'),
 (3, 'Pep', 'Guardiola');
 
-INSERT INTO SQUADRA (id, nome, sede, allenatore_id) VALUES
-(1, 'AS Roma', 'Roma', 1),
-(2, 'Real Madrid', 'Madrid', 2),
-(3, 'Manchester City', 'Manchester', 3);
+INSERT INTO GIOCATORE (id, nome, cognome, ruolo, allenatore_id) VALUES
+(1, 'Paulo', 'Dybala', 'Attaccante', 1),
+(2, 'Luka', 'Modric', 'Centrocampista', 2),
+(3, 'Erling', 'Haaland', 'Attaccante', 3),
+(4, 'Lorenzo', 'Pellegrini', 'Centrocampista', 1),
+(5, 'Toni', 'Kroos', 'Centrocampista', 2),
+(6, 'Kevin', 'De Bruyne', 'Centrocampista', 3);
 
 INSERT INTO PARTITA (id, data) VALUES
 (1, '2025-02-15'),
 (2, '2025-02-20'),
 (3, '2025-02-25');
 
-INSERT INTO SQUADRA_PARTITA (partita_id, squadra_id, goal_squadra) VALUES
-(1, 1, 2),
-(1, 2, 1),
-(2, 2, 3),
-(2, 3, 2),
-(3, 1, 1),
-(3, 3, 1);
+INSERT INTO GIOCATORE_PARTITA (partita_id, giocatore_id, ha_segnato) VALUES
+(1, 1, TRUE),
+(1, 2, FALSE),
+(1, 3, TRUE),
+(2, 2, TRUE),
+(2, 4, FALSE),
+(2, 5, TRUE),
+(3, 1, TRUE),
+(3, 6, TRUE);
