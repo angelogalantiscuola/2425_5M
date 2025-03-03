@@ -17,6 +17,9 @@ erDiagram
     PARTITA {
         int id PK
         date data
+        varchar squadra_casa
+        varchar squadra_ospite
+
     }
     GIOCATORE_PARTITA {
         int partita_id PK,FK
@@ -30,6 +33,7 @@ erDiagram
 ```
 
 The diagram shows the relationships between the tables:
+
 - One ALLENATORE can coach zero or many GIOCATORE (1:N)
 - One GIOCATORE can participate in zero or many PARTITA through GIOCATORE_PARTITA (N:M)
 - One PARTITA involves multiple GIOCATORE through GIOCATORE_PARTITA

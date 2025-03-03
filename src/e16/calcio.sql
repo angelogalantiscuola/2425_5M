@@ -16,7 +16,9 @@ CREATE TABLE GIOCATORE (
 
 CREATE TABLE PARTITA (
     id INTEGER PRIMARY KEY,
-    data DATE NOT NULL
+    data DATE NOT NULL,
+    squadra_casa VARCHAR(50) NOT NULL,
+    squadra_ospite VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE GIOCATORE_PARTITA (
@@ -42,10 +44,10 @@ INSERT INTO GIOCATORE (id, nome, cognome, ruolo, allenatore_id) VALUES
 (5, 'Toni', 'Kroos', 'Centrocampista', 2),
 (6, 'Kevin', 'De Bruyne', 'Centrocampista', 3);
 
-INSERT INTO PARTITA (id, data) VALUES
-(1, '2025-02-15'),
-(2, '2025-02-20'),
-(3, '2025-02-25');
+INSERT INTO PARTITA (id, data, squadra_casa, squadra_ospite) VALUES
+(1, '2025-02-15', 'Roma', 'Real Madrid'),
+(2, '2025-02-20', 'Real Madrid', 'Manchester City'),
+(3, '2025-02-25', 'Manchester City', 'Roma');
 
 INSERT INTO GIOCATORE_PARTITA (partita_id, giocatore_id, ha_segnato) VALUES
 (1, 1, TRUE),
