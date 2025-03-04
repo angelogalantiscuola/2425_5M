@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+from datetime import date
 import json
 import sqlite3
 from flask import Flask, g, jsonify, render_template
@@ -11,6 +13,37 @@ with open("config.json") as config_file:
     config = json.load(config_file)
     DATABASE = config["DATABASE"]
     INITIALIZATION = config["INITIALIZATION"]
+
+
+@dataclass
+class Allenatore:
+    id: int
+    nome: str
+    cognome: str
+
+
+@dataclass
+class Giocatore:
+    id: int
+    nome: str
+    cognome: str
+    ruolo: str
+    allenatore_id: int
+
+
+@dataclass
+class Partita:
+    id: int
+    data: date
+    squadra_casa: str
+    squadra_ospite: str
+
+
+@dataclass
+class GiocatorePartita:
+    partita_id: int
+    giocatore_id: int
+    ha_segnato: bool
 
 
 def get_db():
@@ -38,14 +71,27 @@ def close_db(error):
         g.db.close()
 
 
+# @ is a decorator
 @app.route("/raw_giocatori")
 def raw_giocatori():
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM GIOCATORE")
-    entries = cursor.fetchall()
+    rows = cursor.fetchall()
     cursor.close()
-    return jsonify([dict(row) for row in entries])
+
+    giocatori = [
+        Giocatore(
+            id=row["id"],
+            nome=row["nome"],
+            cognome=row["cognome"],
+            ruolo=row["ruolo"],
+            allenatore_id=row["allenatore_id"],
+        )
+        for row in rows
+    ]
+
+    return jsonify([{"nome": g.nome, "cognome": g.cognome} for g in giocatori])
 
 
 @app.route("/raw_giocatori_partita")
@@ -107,17 +153,34 @@ def giocatori_partita():
     # selezionare i giocatori che hanno partecipato alla partita
     cursor.execute(
         """
-    SELECT g.nome, g.cognome, g.ruolo
+    SELECT g.*
     FROM GIOCATORE g
     JOIN GIOCATORE_PARTITA gp ON g.id = gp.giocatore_id
     WHERE gp.partita_id = ?
     """,
         (partita["partita_id"],),
     )
-    righe_della_tabella = cursor.fetchall()
+    rows: list[Giocatore] = cursor.fetchall()
     cursor.close()
-    # return render_template("giocatori_partita.html")
-    return render_template("giocatori_partita.html", giocatori=righe_della_tabella, squadra_casa=squadra_casa)
+
+    giocatori_python: list[Giocatore] = [
+        Giocatore(
+            id=row["id"],
+            nome=row["nome"],
+            cognome=row["cognome"],
+            ruolo=row["ruolo"],
+            allenatore_id=row["allenatore_id"],
+        )
+        for row in rows
+    ]
+
+    return render_template(
+        "giocatori_partita.html",
+        giocatori_er=giocatori_python,
+        squadra_casa=squadra_casa,
+        squadra_ospite=squadra_ospite,
+        partita=partita["partita_id"],
+    )
 
 
 @app.route("/")  # Add default route
@@ -130,9 +193,20 @@ def giocatori():
         FROM GIOCATORE g 
         LEFT JOIN ALLENATORE a ON g.allenatore_id = a.id
     """)
-    entries = cursor.fetchall()
+    rows = cursor.fetchall()
     cursor.close()
-    return render_template("giocatori.html", entries=entries)
+
+    giocatori = [
+        Giocatore(
+            id=row["id"],
+            nome=row["nome"],
+            cognome=row["cognome"],
+            ruolo=row["ruolo"],
+            allenatore_id=row["allenatore_id"],
+        )
+        for row in rows
+    ]
+    return render_template("giocatori.html", entries=giocatori)
 
 
 if __name__ == "__main__":
