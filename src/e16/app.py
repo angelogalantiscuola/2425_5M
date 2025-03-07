@@ -185,7 +185,7 @@ def giocatori_partita():
 
 @app.route("/")  # Add default route
 @app.route("/giocatori")
-def giocatori():
+def funzione_giocatori():
     db = get_db()
     cursor = db.cursor()
     cursor.execute("""
