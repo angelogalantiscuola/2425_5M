@@ -303,52 +303,37 @@ educational-games/
   └── classifica.html
 ```
 
-L'architettura dell’applicazione è organizzata in più livelli che separano le responsabilità, garantendo modularità e facilità di manutenzione. Di seguito la proposta strutturale:
+```plantuml
+@startuml Educational Games admin
 
-### 1. Livello di Presentazione (Frontend)
+left to right direction
+skinparam actorStyle awesome
 
-- **Template HTML & CSS (Bootstrap):**  
-  I template si occupano della visualizzazione e dell'interazione utente.  
-  _Directory:_ `templates/`  
-  _Esempi:_ `base.html`, `login.html`, `giochi.html`, `gioco.html`, `classifica.html`
+actor "Teacher" as teacher
+actor "Student" as student
 
-- **Risorse Statiche:**  
-  File CSS, JavaScript e immagini per migliorare l’interfaccia.  
-  _Directory:_ `static/`  
-  _Esempi:_ `css/`, `js/`, `images/`
+usecase "Create Virtual Class" as UC1
+usecase "Manage Game Catalog" as UC2
+teacher --> UC2
+UC2 .> UC1 : <<extend>>
+usecase "Generates Code" as UC6
+UC1 .> UC6 : <<includes>>
 
-### 2. Livello della Logica Applicativa (Backend)
+usecase "Join Class" as UC4
+usecase "Play Educational Games" as UC5
+student --> UC5
+UC5 .> UC4 : <<extend>>
+usecase "Get Coins" as UC7
+UC5 .> UC7 : <<extend>>
 
-- **Applicazione Flask:**  
-  Il file principale `app.py` gestisce le route, la logica di business e l’interazione con il database.  
-  _Funzioni principali:_
-  - Gestione degli endpoint per il catalogo, i dettagli di gioco e le classifiche.
-  - Gestione delle sessioni utente e delle form submission.
-- **Moduli e Configurazioni (opzionali):**  
-  Per scalabilità si può decomporre la logica in moduli (es. `routes/`, `models/`, `utils/`) e centralizzare le impostazioni in `config.py`.
+usecase "View Leaderboard" as UC8
+teacher --> UC8
+student --> UC8
 
-### 3. Livello di Persistenza (Database)
 
-- **Database SQLite:**  
-  Utilizzato per la semplicità e gestione dei dati (utenti, giochi, classi, progressi).  
-  _File:_ `schema.sql`  
-  _Funzioni principali:_
-  - Creazione delle tabelle.
-  - Gestione dei vincoli (integrità referenziale, controlli di dominio).
+@enduml
+```
 
-### 4. Connessione tra i Livelli
-
-- **Controller / Route:**  
-  Le route in Flask fungono da intermediari, ricevendo le richieste dal frontend, eseguendo la logica tramite il backend ed effettuando le query sul database per poi restituire i risultati ai template HTML.
-- **Gestione delle Richieste e Risposte:**  
-  Utilizzo di form submissions per interazione utente e JSON per eventuali API interne.
-
-### 5. Strumenti Ausiliari
-
-- **Ambiente Virtuale e Gestione Dipendenze:**  
-  _File:_ `requirements.txt` per la lista delle dipendenze Python.
-- **Documentazione e Configurazioni:**  
-  _File:_ `README.md` con istruzioni per l’installazione e l’esecuzione dell’applicazione.
 
 ## Codice
 
