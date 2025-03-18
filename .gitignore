@@ -1,4 +1,5 @@
 # Ignore hidden files in all directories
+vr/
 **/.*
 
 # Byte-compiled / optimized / DLL files

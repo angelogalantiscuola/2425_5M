@@ -41,11 +41,13 @@ I piani di allenamento hanno un nome, una descrizione dettagliata, un livello di
 ### Considerazioni sul testo dell'esercizio
 
 1. **Relazione Membro-Armadietto (1:1)**
+
    - Ogni membro può avere al massimo un armadietto assegnato
    - Ogni armadietto può essere assegnato a un solo membro
    - È una relazione uno a uno opzionale dal lato del membro
 
 2. **Relazione Membro-Trainer (N:N)**
+
    - Un membro può allenarsi con più trainer
    - Un trainer può allenare più membri
    - Richiede una tabella di associazione
@@ -67,14 +69,14 @@ erDiagram
         date join_date
         string membership_type
     }
-    
+
     LOCKER {
         int id PK
         string location
         string size
         string status
     }
-    
+
     TRAINER {
         int id PK
         string first_name
@@ -82,7 +84,7 @@ erDiagram
         string specialization
         string certification
     }
-    
+
     WORKOUT_PLAN {
         int id PK
         string name
@@ -100,8 +102,8 @@ erDiagram
         int max_capacity
     }
 
-    
-    MEMBER ||--o| LOCKER : assigned_to
+
+    MEMBER |o--|| LOCKER : assigned_to
     MEMBER }o--o{ TRAINER : trains_with
     MEMBER ||--o{ WORKOUT_PLAN : follows
     TRAINER ||--o{ WORKOUT_PLAN : creates
@@ -126,11 +128,13 @@ Di seguito lo schema logico della base di dati, con le chiavi primarie sottoline
 ### Normalizzazione
 
 1. **Prima Forma Normale (1NF)**
+
    - Tutte le tabelle hanno una chiave primaria
    - Tutti gli attributi contengono valori atomici
    - Non ci sono gruppi di valori ripetuti
 
 2. **Seconda Forma Normale (2NF)**
+
    - Le tabelle sono in 1NF
    - Gli attributi non chiave dipendono dall'intera chiave primaria
    - Le tabelle di associazione (MEMBER_TRAINER, MEMBER_COURSE, TRAINER_COURSE) sono già in 2NF
@@ -258,3 +262,4 @@ INSERT INTO MEMBER_COURSE (member_id, course_id) VALUES
 INSERT INTO MEMBER_WORKOUT (member_id, workout_plan_id) VALUES
 (1, 1),
 (2, 2);
+```
