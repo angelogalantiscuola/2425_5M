@@ -1,6 +1,6 @@
 # Ignore hidden files in all directories
 vr/
-vrx/
+v5/
 **/.*
 
 # Byte-compiled / optimized / DLL files
