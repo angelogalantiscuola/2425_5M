@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Eventi Già Svolti</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Data</th>
+                <th>Provincia</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evento in eventi %}
+                <tr>
+                    <td>{{ evento.titolo }}</td>
+                    <td>{{ evento.data }}</td>
+                    <td>{{ evento.provincia }}</td>
+                    <td>{{ evento.categoria }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

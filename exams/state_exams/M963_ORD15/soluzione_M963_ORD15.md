@@ -134,7 +134,7 @@ CREATE TABLE MEMBRO (
 CREATE TABLE CATEGORIA (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome VARCHAR(50) NOT NULL UNIQUE,
-    descrizione TEXT
+    descrizione TEXT -- Can store longer strings without a specified maximum length
 );
 
 CREATE TABLE EVENTO (

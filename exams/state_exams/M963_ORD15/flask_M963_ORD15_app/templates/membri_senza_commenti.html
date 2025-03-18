@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Membri Senza Commenti</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for membro in membri %}
+                <tr>
+                    <td>{{ membro.id }}</td>
+                    <td>{{ membro.nickname }}</td>
+                    <td>{{ membro.nome }}</td>
+                    <td>{{ membro.cognome }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

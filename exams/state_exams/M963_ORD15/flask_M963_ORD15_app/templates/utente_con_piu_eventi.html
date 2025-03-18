@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Utente con Più Eventi</h1>
+    {% if utente %}
+        <p><strong>ID:</strong> {{ utente.id }}</p>
+        <p><strong>Nickname:</strong> {{ utente.nickname }}</p>
+        <p><strong>Nome:</strong> {{ utente.nome }}</p>
+        <p><strong>Cognome:</strong> {{ utente.cognome }}</p>
+        <p><strong>Email:</strong> {{ utente.email }}</p>
+        <p><strong>Provincia:</strong> {{ utente.provincia }}</p>
+        <p><strong>Numero Eventi:</strong> {{ utente.num_eventi }}</p>
+    {% else %}
+        <p>Nessun utente trovato.</p>
+    {% endif %}
+{% endblock %}

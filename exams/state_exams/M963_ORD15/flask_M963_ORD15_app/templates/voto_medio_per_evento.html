@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Voto Medio per Evento</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titolo</th>
+                <th>Categoria</th>
+                <th>Voto Medio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evento in eventi %}
+                <tr>
+                    <td>{{ evento.id }}</td>
+                    <td>{{ evento.titolo }}</td>
+                    <td>{{ evento.categoria }}</td>
+                    <td>{{ evento.voto_medio }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
