@@ -91,10 +91,10 @@ erDiagram
     Payments {
         int id PK
         int member_id FK
+        int invoice_id FK
         decimal amount
         datetime payment_date
         string payment_method
-        int invoice_id FK
     }
     Invoices {
         int id PK
@@ -110,53 +110,16 @@ erDiagram
     Payments ||--|| Invoices : relates_to
 ```
 
-### Progettazione Logica
+### Schema Logico
 
-Traduciamo il diagramma ER in uno schema relazionale:
+Di seguito lo schema logico della base di dati, con le chiavi primarie sottolineate e le chiavi esterne indicate con FK:
 
-1. **Members**
-
-   - id (PK)
-   - first_name
-   - last_name
-   - email
-   - phone
-
-2. **Resources**
-
-   - id (PK)
-   - name
-   - type
-   - description
-
-3. **Bookings**
-
-   - id (PK)
-   - member_id (FK)
-   - booking_date
-   - start_time
-   - end_time
-   - status
-
-4. **BookingResources**
-
-   - booking_id (PK, FK)
-   - resource_id (PK, FK)
-
-5. **Payments**
-
-   - id (PK)
-   - member_id (FK)
-   - amount
-   - payment_date
-   - payment_method
-   - invoice_id (FK)
-
-6. **Invoices**
-   - id (PK)
-   - total_amount
-   - invoice_date
-   - status
+- Members(**id**, first_name, last_name, email, phone)
+- Resources(**id**, name, type, description)
+- Bookings(**id**, member_id[FK], booking_date, start_time, end_time, status)
+- BookingResources(**booking_id[FK]**, **resource_id[FK]**)
+- Payments(**id**, member_id[FK], amount, payment_date, payment_method, invoice_id[FK])
+- Invoices(**id**, total_amount, invoice_date, status)
 
 ### Normalizzazione
 
