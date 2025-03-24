@@ -186,9 +186,8 @@ CREATE TABLE EVENTO_ARTISTA (
 
 ```sql
 -- 1. Elenco degli eventi già svolti, in ordine alfabetico di provincia
-SELECT e.titolo, e.data, e.provincia, c.nome AS categoria
+SELECT e.titolo, e.data, e.provincia
 FROM EVENTO e
-JOIN CATEGORIA c ON e.categoria_id = c.id
 WHERE e.data < CURRENT_DATE();
 ORDER BY e.provincia ASC, e.data DESC;
 
