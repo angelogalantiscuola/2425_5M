@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Corpi Celesti</h1>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Magnitudine</th>
+        <th>Distanza (parsec)</th>
+    </tr>
+    {% for c in corpi %}
+    <tr>
+        <td>{{ c.nome }}</td>
+        <td>{{ c.categoria }}</td>
+        <td>{{ c.magnitudine }}</td>
+        <td>{{ c.distanza_parsec }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

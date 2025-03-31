@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Osservazioni di {{ ricercatore.nome }} {{ ricercatore.cognome }}</h1>
+<table>
+    <tr>
+        <th>Data</th>
+        <th>Corpo Celeste</th>
+        <th>Categoria</th>
+        <th>Durata (min)</th>
+        <th>Condizioni</th>
+        <th>Note</th>
+    </tr>
+    {% for o in osservazioni %}
+    <tr>
+        <td>{{ o.timestamp }}</td>
+        <td>{{ o.corpo_nome }}</td>
+        <td>{{ o.categoria }}</td>
+        <td>{{ o.durata_minuti }}</td>
+        <td>{{ o.condizioni_meteo }}</td>
+        <td>{{ o.note }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

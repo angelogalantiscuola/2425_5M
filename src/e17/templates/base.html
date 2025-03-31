@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Network Astronomico</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
+            background: #eee;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="button">Home</a>
+        <a href="/telescopi" class="button">Telescopi</a>
+        <a href="/corpi" class="button">Corpi Celesti</a>
+        <a href="/statistiche" class="button">Statistiche</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

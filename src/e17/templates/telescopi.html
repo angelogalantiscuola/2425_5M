@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Telescopi</h1>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Posizione</th>
+        <th>Apertura</th>
+        <th>Tipo</th>
+    </tr>
+    {% for t in telescopi %}
+    <tr>
+        <td>{{ t.nome }}</td>
+        <td>{{ t.posizione }}</td>
+        <td>{{ t.apertura }}</td>
+        <td>{{ t.tipo }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

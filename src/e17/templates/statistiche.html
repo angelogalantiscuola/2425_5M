@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Statistiche</h1>
+
+<h2>Media osservazioni per telescopio</h2>
+<p>{{ "%.2f"|format(media_osservazioni.media) }} osservazioni</p>
+
+<h2>Corpo celeste più osservato</h2>
+<p>{{ corpo_frequente.nome }} ({{ corpo_frequente.conteggio }} osservazioni)</p>
+
+
+{% endblock %}
