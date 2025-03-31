@@ -1,7 +1,7 @@
 # Ignore hidden files in all directories
 17/
 exams/vr/soluzione.md
-v5/
+# v5/
 **/.*
 
 # Byte-compiled / optimized / DLL files
