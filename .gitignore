@@ -1,6 +1,6 @@
 # Ignore hidden files in all directories
-17/
 # v5/
+src/e18/
 **/.*
 
 # Byte-compiled / optimized / DLL files
