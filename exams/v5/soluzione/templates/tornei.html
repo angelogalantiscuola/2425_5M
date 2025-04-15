@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Tornei - League of Legends Tournaments{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Lista Tornei</h2>
+        <p class="lead">Elenco di tutti i tornei ordinati per montepremi</p>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Montepremi (€)</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for torneo in tornei %}
+                    <tr>
+                        <td>{{ torneo.id }}</td>
+                        <td>{{ torneo.nome }}</td>
+                        <td>{{ torneo.data }}</td>
+                        <td>{{ torneo.premio }}</td>
+                        <td>
+                            <a href="/torneo/{{ torneo.id }}" class="btn btn-sm btn-primary">Visualizza Giocatori</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

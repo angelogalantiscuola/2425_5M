@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ torneo.nome }} - League of Legends Tournaments{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{ torneo.nome }}</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p><strong>Data:</strong> {{ torneo.data }}</p>
+                <p><strong>Montepremi:</strong> {{ torneo.premio }} €</p>
+            </div>
+        </div>
+
+        <h3>Giocatori Partecipanti</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Livello</th>
+                        <th>Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for giocatore in giocatori %}
+                    <tr>
+                        <td>{{ giocatore.id }}</td>
+                        <td>{{ giocatore.username }}</td>
+                        <td>{{ giocatore.email }}</td>
+                        <td>{{ giocatore.livello }}</td>
+                        <td>{{ giocatore.team_nome }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="/tornei" class="btn btn-primary mt-3">Torna ai Tornei</a>
+    </div>
+</div>
+{% endblock %}

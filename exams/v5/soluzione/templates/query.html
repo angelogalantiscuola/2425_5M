@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Statistiche - League of Legends Tournaments{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Statistiche e Query</h2>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="h5 mb-0">Somma dei premi di tutti i tornei</h3>
+            </div>
+            <div class="card-body">
+                <p class="lead">Totale: {{ somma_premi }} €</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="h5 mb-0">Numero di giocatori per ogni team</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Numero Giocatori</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for team in team_giocatori %}
+                        <tr>
+                            <td>{{ team.nome }}</td>
+                            <td>{{ team.num_giocatori }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="h5 mb-0">Team con il giocatore di livello più alto</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Team:</strong> {{ top_player_team.team_nome }}</p>
+                <p><strong>Giocatore:</strong> {{ top_player_team.username }}</p>
+                <p><strong>Livello:</strong> {{ top_player_team.livello }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

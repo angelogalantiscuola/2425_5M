@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <h2 class="mb-4">Gestione Tornei ESports League of Legends</h2>
+    <p class="lead mb-5">Sistema per la gestione di tornei competitivi di League of Legends</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-grid gap-3">
+                <a href="/tornei" class="btn btn-primary btn-lg">Visualizza Tornei</a>
+                <a href="/teams" class="btn btn-success btn-lg">Visualizza Teams</a>
+                <a href="/query" class="btn btn-info btn-lg">Statistiche e Query</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
