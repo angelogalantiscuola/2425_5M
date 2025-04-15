@@ -1,15 +1,26 @@
 import os
 import sqlite3
+import configparser
 from flask import Flask, render_template, request, redirect, url_for, session, g, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Load application configuration from config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 app = Flask(__name__)
-app.config["DATABASE"] = "database.db"
-app.config["UPLOAD_FOLDER"] = "uploads"
-app.config["SECRET_KEY"] = "change_this_secret_key"
-ALLOWED_EXTENSIONS = {"pdf"}
+
+# Configuration settings
+app.config["DATABASE"] = config['database']['DATABASE_PATH']
+app.config["UPLOAD_FOLDER"] = config['uploads']['UPLOAD_FOLDER']
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+ALLOWED_EXTENSIONS = set(config['uploads']['ALLOWED_EXTENSIONS'].split(','))
 
 # Ensure upload folder exists
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
@@ -155,4 +166,4 @@ def uploaded_file(filename):
 if __name__ == "__main__":
     with app.app_context():
         init_db()
-    app.run(debug=True)
+    app.run(debug=config.getboolean('app', 'DEBUG'))
