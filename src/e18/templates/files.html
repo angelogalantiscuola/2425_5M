@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Your PDF Files - PDF Upload App{% endblock %}
+{% block content %}
+<h2>Your Uploaded PDF Files</h2>
+{% if files %}
+<table>
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Upload Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td>
+                <a href="{{ url_for('uploaded_file', filename=file.filename) }}" target="_blank">
+                    {{ file.original_name }}
+                </a>
+            </td>
+            <td>{{ file.upload_date }}</td>
+            <td>
+                <form action="{{ url_for('delete_file', file_id=file.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Delete this file?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No files uploaded yet. <a href="{{ url_for('upload') }}">Upload a PDF</a></p>
+{% endif %}
+{% endblock %}
