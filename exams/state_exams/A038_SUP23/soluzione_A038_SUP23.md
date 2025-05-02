@@ -63,6 +63,13 @@ Il candidato, fatte le opportune ipotesi aggiuntive, sviluppi:
 
 ```mermaid
 erDiagram
+
+    PALESTRA ||--|{ CITTA : "si trova in"
+    PALESTRA ||--o{ OFFERTA_ATTIVITA : offre
+    OFFERTA_ATTIVITA ||--|| ATTIVITA_STANDARD : "è di tipo"
+    ABBONATO ||--o{ PRENOTAZIONE : effettua
+    PRENOTAZIONE ||--|| OFFERTA_ATTIVITA : "riguarda"
+
     PALESTRA {
         int id PK
         string nome
@@ -83,7 +90,7 @@ erDiagram
 
     ATTIVITA_STANDARD {
         int id PK
-        string nome UNIQUE
+        string nome
         string descrizione
     }
 
@@ -91,7 +98,7 @@ erDiagram
         int id PK
         int palestra_id FK
         int attivita_standard_id FK
-        enum giorno_settimana "Lun, Mar, Mer, Gio, Ven, Sab, Dom"
+        enum giorno_settimana
         time orario_inizio
         time orario_fine
         decimal prezzo_convenzionato
@@ -113,11 +120,6 @@ erDiagram
         string regione
     }
 
-    PALESTRA ||--|{ CITTA : "si trova in"
-    PALESTRA ||--o{ OFFERTA_ATTIVITA : offre
-    OFFERTA_ATTIVITA ||--|| ATTIVITA_STANDARD : "è di tipo"
-    ABBONATO ||--o{ PRENOTAZIONE : effettua
-    PRENOTAZIONE ||--|| OFFERTA_ATTIVITA : "riguarda"
 
 ```
 
@@ -282,7 +284,7 @@ graph TD
         UI[HTML/CSS/JS - Bootstrap]
     end
 
-    subgraph Web Server (Flask)
+    subgraph Web Server Flask
         direction TB
         Routes[app.py - Routing] --> Logic[Logica Applicativa]
         Logic --> DBUtils[database.py - DB Helper]
