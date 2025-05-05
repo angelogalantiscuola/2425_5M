@@ -81,7 +81,6 @@ erDiagram
     ATTIVITA_STANDARD {
         int id PK
         string nome
-        string nome
         string descrizione
     }
 
@@ -89,7 +88,6 @@ erDiagram
         int id PK
         int palestra_id FK
         int attivita_standard_id FK
-        enum giorno_settimana
         enum giorno_settimana
         time orario_inizio
         time orario_fine
@@ -226,24 +224,23 @@ ORDER BY pa.nome, oa.orario_inizio;
 
 -- 4.2 Importo totale prenotazioni Aprile per una palestra specifica
 SELECT
-    SUM(pr.importo_pagato) AS ImportoTotaleAprile
+  SUM(pr.importo_pagato) AS ImportoTotaleAprile
 FROM Prenotazione pr
 JOIN OffertaAttivita oa ON pr.offerta_attivita_id = oa.id
 WHERE oa.palestra_id = 1 -- Sostituire con l'ID della palestra desiderata
-  AND strftime('%Y-%m', pr.data_prenotazione) = strftime('%Y-', date('now')) || '04'; -- Assumendo anno corrente, mese Aprile
+  AND pr.data_prenotazione BETWEEN '2023-04-01' AND '2023-04-30'; -- Sostituire con l'anno desiderato
 
 -- 4.3 Classifica annuale palestre di una città per numero prenotazioni
 SELECT
-    pa.nome AS NomePalestra,
-    COUNT(pr.id) AS NumeroPrenotazioniAnnue
+  pa.nome AS NomePalestra,
+  COUNT(pr.id) AS NumeroPrenotazioniAnnue
 FROM Prenotazione pr
 JOIN OffertaAttivita oa ON pr.offerta_attivita_id = oa.id
 JOIN Palestra pa ON oa.palestra_id = pa.id
 WHERE pa.citta_nome = 'NomeCittaSpecificata' -- Sostituire con la città desiderata
-  AND strftime('%Y', pr.data_prenotazione) = strftime('%Y', date('now')) -- Assumendo anno corrente
+  AND pr.data_prenotazione BETWEEN '2023-01-01' AND '2023-12-31' -- Sostituire con l'anno desiderato
 GROUP BY pa.id, pa.nome
 ORDER BY NumeroPrenotazioniAnnue DESC;
-```
 
 ## Progetto dell'Applicazione Web
 
