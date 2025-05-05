@@ -16,37 +16,37 @@
 
 ## Testo
 
-La società SportOvunque, proprietaria di diverse palestre di fitness in alcune città d’Italia, vuole lanciare un servizio innovativo che dia la possibilità alle persone che viaggiano di poter accedere, con un unico abbonamento, ad attività offerte da palestre gestite anche da altre società, in tutta Italia.
+La società SportOvunque, proprietaria di diverse palestre di fitness in alcune città d'Italia, vuole lanciare un servizio innovativo che dia la possibilità alle persone che viaggiano di poter accedere, con un unico abbonamento, ad attività offerte da palestre gestite anche da altre società, in tutta Italia.
 
 A tale scopo SportOvunque ha preso accordi con palestre interessate ad aderire a questa iniziativa su tutto il territorio nazionale.
 
 Le palestre che hanno aderito praticheranno tariffe di ingresso agevolate riservate agli abbonati di SportOvunque.
 
-L’abbonamento a questo servizio può essere acquistato sul portale web di SportOvunque, dove i potenziali clienti possono registrarsi pagando on-line la relativa quota annuale.
+L'abbonamento a questo servizio può essere acquistato sul portale web di SportOvunque, dove i potenziali clienti possono registrarsi pagando on-line la relativa quota annuale.
 
-Ogni palestra che aderisce all’iniziativa dovrà caricare sul portale i propri dati, comprensivi di indirizzo, città e coordinate geografiche.
+Ogni palestra che aderisce all'iniziativa dovrà caricare sul portale i propri dati, comprensivi di indirizzo, città e coordinate geografiche.
 
 Dovrà poi caricare anche la propria offerta di fitness: per ogni tipologia standardizzata di attività (es: Sala macchine, GAG, Zumba, Pilates ecc…) resa disponibile agli abbonati, indicherà i giorni della settimana (lunedì, martedì, …) in cui le attività vengono svolte, ciascuna con gli orari in cui possono essere prenotate, il relativo prezzo convenzionato e il numero massimo di posti disponibili.
 
-Un abbonato potrà prenotare attività presso una qualsiasi palestra tra quelle presenti sul portale: individuerà la palestra, l’attività, il giorno della settimana e l’orario, e sceglierà la data specifica di suo interesse.
+Un abbonato potrà prenotare attività presso una qualsiasi palestra tra quelle presenti sul portale: individuerà la palestra, l'attività, il giorno della settimana e l'orario, e sceglierà la data specifica di suo interesse.
 
-Se in quella data sono già state effettuate prenotazioni in numero pari al massimo dei posti disponibili per quell’attività, l’attività non sarà prenotabile.
+Se in quella data sono già state effettuate prenotazioni in numero pari al massimo dei posti disponibili per quell'attività, l'attività non sarà prenotabile.
 
-Altrimenti la prenotazione verrà regolarmente registrata, e l’abbonato pagherà on-line il relativo prezzo a SportOvunque; quest’ultima provvederà poi a versare mensilmente, alle varie palestre che hanno aderito al servizio, gli incassi relativi alle attività prenotate.
+Altrimenti la prenotazione verrà regolarmente registrata, e l'abbonato pagherà on-line il relativo prezzo a SportOvunque; quest'ultima provvederà poi a versare mensilmente, alle varie palestre che hanno aderito al servizio, gli incassi relativi alle attività prenotate.
 
 ## Compito
 
 Il candidato, fatte le opportune ipotesi aggiuntive, sviluppi:
 
-1. un’analisi della realtà di riferimento, giungendo alla definizione di uno schema concettuale della base di dati che, a suo motivato giudizio, sia idoneo a gestire la realtà presentata;
+1. un'analisi della realtà di riferimento, giungendo alla definizione di uno schema concettuale della base di dati che, a suo motivato giudizio, sia idoneo a gestire la realtà presentata;
 2. il relativo schema logico;
 3. la definizione in linguaggio SQL di un sottoinsieme delle relazioni della base di dati in cui siano presenti alcune di quelle che contengono vincoli di integrità referenziale e/o vincoli di dominio, se esistenti;
 4. le interrogazioni espresse in linguaggio SQL che restituiscono:
-   1. l’elenco delle attività disponibili in una data città il mercoledì, indicando, per ciascuna attività, la palestra, la tipologia di attività, l’orario di svolgimento, il numero massimo di posti disponibili, ed il prezzo, ordinate per palestra;
-   2. l’importo totale delle prenotazioni pagate dagli abbonati nel mese di aprile, che SportOvunque dovrà versare ad una determinata palestra;
+   1. l'elenco delle attività disponibili in una data città il mercoledì, indicando, per ciascuna attività, la palestra, la tipologia di attività, l'orario di svolgimento, il numero massimo di posti disponibili, ed il prezzo, ordinate per palestra;
+   2. l'importo totale delle prenotazioni pagate dagli abbonati nel mese di aprile, che SportOvunque dovrà versare ad una determinata palestra;
    3. la classifica annuale delle palestre di una certa città, ordinata in base al numero di attività prenotate;
-5. il progetto di massima della struttura dell’applicazione web per la gestione della realtà sopra presentata;
-6. una parte significativa dell'applicazione web che consente l’interazione con la base di dati, utilizzando appropriati linguaggi a scelta sia lato client che lato server.
+5. il progetto di massima della struttura dell'applicazione web per la gestione della realtà sopra presentata;
+6. una parte significativa dell'applicazione web che consente l'interazione con la base di dati, utilizzando appropriati linguaggi a scelta sia lato client che lato server.
 
 ## Analisi dei Requisiti
 
@@ -63,13 +63,12 @@ Il candidato, fatte le opportune ipotesi aggiuntive, sviluppi:
 
 ```mermaid
 erDiagram
-
-    PALESTRA ||--|{ CITTA : "si trova in"
-    PALESTRA ||--o{ OFFERTA_ATTIVITA : offre
-    OFFERTA_ATTIVITA ||--|| ATTIVITA_STANDARD : "è di tipo"
-    ABBONATO ||--o{ PRENOTAZIONE : effettua
-    PRENOTAZIONE ||--|| OFFERTA_ATTIVITA : "riguarda"
-
+    CITTA {
+        string nome PK
+        string provincia
+        string regione
+    }
+    
     PALESTRA {
         int id PK
         string nome
@@ -77,6 +76,25 @@ erDiagram
         string citta_nome FK
         float latitudine
         float longitudine
+    }
+
+    ATTIVITA_STANDARD {
+        int id PK
+        string nome
+        string nome
+        string descrizione
+    }
+
+    OFFERTA_ATTIVITA {
+        int id PK
+        int palestra_id FK
+        int attivita_standard_id FK
+        enum giorno_settimana
+        enum giorno_settimana
+        time orario_inizio
+        time orario_fine
+        decimal prezzo_convenzionato
+        int posti_max
     }
 
     ABBONATO {
@@ -88,23 +106,6 @@ erDiagram
         date data_scadenza_abbonamento
     }
 
-    ATTIVITA_STANDARD {
-        int id PK
-        string nome
-        string descrizione
-    }
-
-    OFFERTA_ATTIVITA {
-        int id PK
-        int palestra_id FK
-        int attivita_standard_id FK
-        enum giorno_settimana
-        time orario_inizio
-        time orario_fine
-        decimal prezzo_convenzionato
-        int posti_max
-    }
-
     PRENOTAZIONE {
         int id PK
         int abbonato_id FK
@@ -114,13 +115,11 @@ erDiagram
         decimal importo_pagato
     }
 
-    CITTA {
-        string nome PK
-        string provincia
-        string regione
-    }
-
-
+    PALESTRA ||--|{ CITTA : "si trova in"
+    PALESTRA ||--o{ OFFERTA_ATTIVITA : "offre"
+    OFFERTA_ATTIVITA }|--|| ATTIVITA_STANDARD : "è di tipo"
+    ABBONATO ||--o{ PRENOTAZIONE : "effettua"
+    PRENOTAZIONE }|--|| OFFERTA_ATTIVITA : "riguarda"
 ```
 
 ### Commento al Diagramma ER
@@ -244,7 +243,6 @@ WHERE pa.citta_nome = 'NomeCittaSpecificata' -- Sostituire con la città desider
   AND strftime('%Y', pr.data_prenotazione) = strftime('%Y', date('now')) -- Assumendo anno corrente
 GROUP BY pa.id, pa.nome
 ORDER BY NumeroPrenotazioniAnnue DESC;
-
 ```
 
 ## Progetto dell'Applicazione Web
@@ -350,12 +348,10 @@ def verifica_disponibilita(db, offerta_id, data_richiesta):
 
     return prenotazioni_esistenti < offerta['posti_max']
 
-
 if __name__ == '__main__':
     # Creare il DB se non esiste (solo per esempio)
     # init_db()
     app.run(debug=True)
-
 ```
 
 ```html
@@ -434,4 +430,3 @@ if __name__ == '__main__':
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>
 </html>
-```
