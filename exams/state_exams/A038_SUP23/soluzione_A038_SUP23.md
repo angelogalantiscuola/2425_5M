@@ -113,7 +113,7 @@ erDiagram
         decimal importo_pagato
     }
 
-    PALESTRA ||--|{ CITTA : "si trova in"
+    PALESTRA }|--|| CITTA : "si trova in"
     PALESTRA ||--o{ OFFERTA_ATTIVITA : "offre"
     OFFERTA_ATTIVITA }|--|| ATTIVITA_STANDARD : "è di tipo"
     ABBONATO ||--o{ PRENOTAZIONE : "effettua"
@@ -241,6 +241,7 @@ WHERE pa.citta_nome = 'NomeCittaSpecificata' -- Sostituire con la città desider
   AND pr.data_prenotazione BETWEEN '2023-01-01' AND '2023-12-31' -- Sostituire con l'anno desiderato
 GROUP BY pa.id, pa.nome
 ORDER BY NumeroPrenotazioniAnnue DESC;
+```
 
 ## Progetto dell'Applicazione Web
 
