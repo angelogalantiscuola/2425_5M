@@ -70,7 +70,9 @@ erDiagram
         int id_classe PK
         string nome_classe "es. 3A INF"
         string tipologia "Liceo, Tecnico, Professionale"
-        string indirizzo_articolazione_opzione
+        string indirizzo "Indirizzo principale del corso"
+        string articolazione "Eventuale articolazione (NULL se non presente)"
+        string opzione "Eventuale opzione (NULL se non presente)"
     }
 
     DOCENTE {
@@ -141,7 +143,9 @@ CREATE TABLE CLASSE (
     id_classe INTEGER PRIMARY KEY AUTOINCREMENT,
     nome_classe VARCHAR(50) NOT NULL UNIQUE, -- Es. "3A INF"
     tipologia VARCHAR(50) NOT NULL CHECK (tipologia IN ('Liceo', 'Tecnico', 'Professionale')),
-    indirizzo_articolazione_opzione TEXT NOT NULL
+    indirizzo VARCHAR(100) NOT NULL,
+    articolazione VARCHAR(100),  -- NULL se non presente
+    opzione VARCHAR(100)         -- NULL se non presente
 );
 
 CREATE TABLE STUDENTE (
@@ -207,6 +211,7 @@ FROM ASSENZA a
 JOIN STUDENTE s ON a.id_studente = s.id_studente
 WHERE s.username_studente = 'username_dello_studente'; -- Sostituire con lo username effettivo o usare s.id_studente
 
+
 -- b. Elencare gli studenti che non hanno mai fatto assenze.
 SELECT s.nome, s.cognome, c.nome_classe
 FROM STUDENTE s
@@ -228,7 +233,7 @@ SELECT
 FROM STUDENTE s
 JOIN ASSENZA a ON s.id_studente = a.id_studente
 JOIN CLASSE cl ON s.id_classe = cl.id_classe
-GROUP BY s.id_studente, s.cognome, s.nome, cl.nome_classe
+GROUP BY s.id_studente, cl.nome_classe
 HAVING SUM(a.ore_assenza) > 10 -- Sostituire 10 con il numero di ore desiderato
 ORDER BY ore_assenza_totali DESC, s.cognome, s.nome;
 ```
@@ -354,8 +359,8 @@ if __name__ == '__main__':
     # db = sqlite3.connect(DATABASE)
     # cursor = db.cursor()
     # try:
-    #     cursor.execute("INSERT INTO CLASSE (nome_classe, tipologia, indirizzo_articolazione_opzione) VALUES (?, ?, ?)",
-    #                    ('3A INF', 'Tecnico', 'Informatica e Telecomunicazioni art. Informatica'))
+    #     cursor.execute("INSERT INTO CLASSE (nome_classe, tipologia, indirizzo, articolazione, opzione) VALUES (?, ?, ?, ?, ?)",
+    #                    ('3A INF', 'Tecnico', 'Informatica e Telecomunicazioni', 'Informatica', NULL))
     #     id_classe = cursor.lastrowid
     #     cursor.execute("INSERT INTO STUDENTE (nome, cognome, data_nascita, username_studente, password_studente, id_classe) VALUES (?, ?, ?, ?, ?, ?)",
     #                    ('Mario', 'Rossi', '2005-05-10', 'mario.rossi', hash_password('password123'), id_classe))
